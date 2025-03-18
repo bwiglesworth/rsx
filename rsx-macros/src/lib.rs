@@ -1,45 +1,52 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{parse::{Parse, ParseStream}, Token};
+use syn::{parse_macro_input, parse::Parse, Token, Ident, LitStr, Result, parse::ParseStream};
 
-#[derive(Debug)]
 struct Element {
-    tag: syn::Ident,
-    attrs: Vec<Attribute>,
+    tag: Ident,
+    attributes: Vec<XmlAttribute>,
     children: Vec<Element>,
 }
 
-#[derive(Debug)]
-struct Attribute {
-    name: syn::Ident,
-    value: syn::Expr,
-}
-
 impl Parse for Element {
-    fn parse(input: ParseStream) -> syn::Result<Self> {
+    fn parse(input: ParseStream) -> Result<Self> {
+        input.parse::<Token![<]>()?;
         let tag = input.parse()?;
-        let attrs = parse_attributes(input)?;
+        let attributes = parse_attributes(input)?;
+        input.parse::<Token![>]>()?;
+        
         let children = parse_children(input)?;
         
-        Ok(Element { tag, attrs, children })
+        // Parse closing tag separately
+        input.parse::<Token![<]>()?;
+        input.parse::<Token![/]>()?;
+        let closing_tag = input.parse::<Ident>()?;
+        if closing_tag != tag {
+            return Err(input.error("mismatched tags"));
+        }
+        input.parse::<Token![>]>()?;
+        
+        Ok(Element {
+            tag,
+            attributes,
+            children,
+        })
     }
 }
 
+
 #[proc_macro]
 pub fn rsx(input: TokenStream) -> TokenStream {
-    let element = parse_macro_input!(input as Element);
+    let input = parse_macro_input!(input as Element);
     
-    quote! {
-        ComponentBuilder::new(#element.tag::new())
-            .with_props(Props {
-                #(#element.attrs)*
-            })
-            .with_children(vec![#(#element.children)*])
-            .build()
-    }.into()
+    let expanded = quote! {
+        Component::with_props(Props::default())
+    };
+    
+    TokenStream::from(expanded)
 }
 
-fn parse_attributes(input: ParseStream) -> syn::Result<Vec<Attribute>> {
+fn parse_attributes(input: ParseStream) -> syn::Result<Vec<XmlAttribute>> {
     let mut attrs = Vec::new();
     
     while !input.peek(Token![>]) {
@@ -47,7 +54,7 @@ fn parse_attributes(input: ParseStream) -> syn::Result<Vec<Attribute>> {
         input.parse::<Token![=]>()?;
         let value = input.parse()?;
         
-        attrs.push(Attribute { name, value });
+        attrs.push(XmlAttribute { name, value, equals: input.parse()? });
     }
     
     Ok(attrs)

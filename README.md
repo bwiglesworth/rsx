@@ -25,13 +25,35 @@ Create your first component:
 ```rust
 use rsx::components::Component;
 
-struct HelloWorld;
+#[derive(Default)]
+struct CounterState {
+    count: i32
+}
 
-impl Component for HelloWorld {
+struct Counter {
+    state: CounterState
+}
+
+impl Component for Counter {
+    type State = CounterState;
+    
     fn render(&self) -> String {
-        "<h1>Hello, World!</h1>".to_string()
+        format!("<div>Count: {}</div>", self.state.count)
     }
 }
+```
+
+## File-Based Routing
+
+RSX uses a file-based routing system similar to Next.js:
+
+```
+pages/
+  index.rs      -> "/"
+  about.rs      -> "/about"
+  blog/
+    index.rs    -> "/blog"
+    [slug].rs   -> "/blog/:slug"
 ```
 
 ## Testing

@@ -9,19 +9,22 @@ pub use lifecycle::{OnMount, LifecycleState};
 pub use counter::{Counter, CounterState};
 pub use card::{Card, CardState};
 
-pub trait Component {
-    type State;
+pub trait Component: Sized {
+    type Props: Default;
+
     fn render(&self) -> String;
-    fn get_state(&self) -> &Self::State;
-    fn set_state(&mut self, state: Self::State);
     
-    fn init(&mut self) {}
-    fn before_mount(&mut self) {}
-    fn before_update(&mut self) -> bool { true }
-    fn updated(&mut self) {}
+    fn with_props(props: Self::Props) -> ComponentBuilder<Self>;
+    
+    fn children(&self) -> &[Box<dyn Component>];
 }
 
-pub trait Mountable: Component + OnMount {
+#[derive(Default)]
+pub struct Props {
+    pub class_name: Option<String>,
+    pub style: Option<Style>,
+    pub on_click: Option<Box<dyn Fn() -> ()>>,
+}pub trait Mountable: Component + OnMount {
     fn mount(&self) {
         let future = self.on_mount();
         tokio::spawn(future);

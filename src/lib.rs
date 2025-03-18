@@ -16,6 +16,15 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const FRAMEWORK_NAME: &str = "RSX";
 
 // Initialize framework
+pub use rsx_macros::rsx;
+
+#[macro_export]
+macro_rules! component {
+    (<$name:ident $($props:tt)*>) => {
+        ComponentBuilder::new($name::new($($props)*))
+    };
+}
+
 pub fn init() -> Router {
     Router::new()
 }

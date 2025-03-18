@@ -1,36 +1,37 @@
 use std::fmt;
 
-pub struct Style {
-    rules: Vec<StyleRule>,
+use std::collections::HashMap;
+
+pub struct StyleRegistry {
+    styles: HashMap<String, Style>,
 }
 
-pub struct StyleRule {
-    selector: String,
-    properties: Vec<(String, String)>,
+#[derive(Default)]
+pub struct Style {
+    rules: HashMap<String, HashMap<String, String>>,
 }
 
 impl Style {
     pub fn new() -> Self {
-        Style { rules: Vec::new() }
+        Self::default()
     }
 
     pub fn add_rule(&mut self, selector: &str) -> &mut StyleRule {
-        let rule = StyleRule {
-            selector: selector.to_string(),
-            properties: Vec::new(),
-        };
-        self.rules.push(rule);
-        self.rules.last_mut().unwrap()
+        self.rules.entry(selector.to_string())
+            .or_default()
     }
 }
 
-impl StyleRule {
-    pub fn property(&mut self, name: &str, value: &str) -> &mut Self {
-        self.properties.push((name.to_string(), value.to_string()));
+pub struct StyleRule<'a> {
+    properties: &'a mut HashMap<String, String>,
+}
+
+impl<'a> StyleRule<'a> {
+    pub fn property(mut self, name: &str, value: &str) -> Self {
+        self.properties.insert(name.to_string(), value.to_string());
         self
     }
 }
-
 impl fmt::Display for Style {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for rule in &self.rules {

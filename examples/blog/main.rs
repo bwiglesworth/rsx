@@ -69,7 +69,7 @@ async fn main() {
 
     let blog = ComponentBuilder::new(blog).build();
     let mut router = Router::new();
-    router.route("/", move || Html(blog.render()));
+    router.route("/", move || Html("<Card className=\"my-card\"><h1>Title</h1></Card>"));
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 3000));
     println!("Server running at http://{}", addr);

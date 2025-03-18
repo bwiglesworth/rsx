@@ -1,6 +1,13 @@
 [package]
 name = "rsx"
-version = "0.1.0"
+version = "0.1.10"
+authors = ["Timmons & Larson, Inc."]
+description = "A lightweight framework for building server-side rendered React-like components in Rust"
+license = "MIT"
+repository = "https://github.com/bwiglesworth/rsx"
+documentation = "https://docs.rs/rsx"
+keywords = ["web", "framework", "components", "server-side-rendering", "react"]
+categories = ["web-programming"]
 edition = "2024"
 
 [dependencies]

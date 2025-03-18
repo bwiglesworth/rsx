@@ -64,3 +64,17 @@ Upcoming features and improvements:
 - [ ] Performance optimizations
 - [ ] Extended documentation and examples
 - [ ] Hybrid rendering options (Server + Client)
+- [ ] File-based routing system
+- [ ] Image optimization and handling
+- [ ] API routes
+- [ ] Built-in CSS/Sass support
+- [ ] Automatic code splitting
+- [ ] Environment variable handling
+- [ ] Static site generation (SSG)
+- [ ] Incremental Static Regeneration (ISR)
+- [ ] Dynamic imports
+- [ ] SEO optimization tools
+- [ ] Internationalization
+- [ ] Analytics integration
+- [ ] Edge functions
+- [ ] Zero-config deployment- [ ] Hybrid rendering options (Server + Client)

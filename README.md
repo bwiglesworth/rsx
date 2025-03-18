@@ -1,34 +1,35 @@
-# RSX Web Framework
+# RSX - Rust Server Components
 
-A modern Rust web framework built with Axum, featuring hot reload capabilities and a flexible styling system.
+A modern web framework for building server-side rendered applications in Rust.
 
-## Development Status
+## Completed Features
 
-This project is under active development. While core features are functional, the API may change as we enhance and optimize the framework.
+- File-based routing
+- Hot reload during development
+- Component system with nested children support
+- Built-in styling system
+- Server-side rendering
 
-## Features
-
-- Fast and efficient routing system
-- Built-in hot reload functionality
-- Customizable styling system
-- Clean and intuitive API
-
-## Example Usage
+## Component Example
 
 ```rust
-use axum::response::Html;
-use rsx::{Router, Server};
+use rsx::components::{Component, ComponentBuilder};
 
-#[tokio::main]
-async fn main() {
-    let mut router = Router::new();
-    
-    router.route("/", || Html("<h1>Welcome to RSX!</h1>".to_string()));
-    
-    let server = Server::new(router);
-    server.start().await;
-}
+// Create a card component
+let card = Card {
+    title: "Welcome".to_string(),
+    content: "This is a RSX card component".to_string(),
+    children: Vec::new(),
+};
+
+let card = ComponentBuilder::new(card)
+    .build();
+
+// Render the component
+card.render();
 ```
+
+Ready to add more examples or enhance the documentation further!
 
 ## Testing
 

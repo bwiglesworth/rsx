@@ -7,13 +7,10 @@ pub mod styles;
 
 // Re-exports for convenient usage
 pub use router::Router;
-pub use router::RouteConfig;
 pub use server::Server;
-pub use components::{Component, Props};
-pub use builder::Builder;
+pub use components::Component;pub use builder::Builder;
 pub use templates::AppTemplate;
-pub use styles::{Style, StyleRule};
-
+pub use styles::Style;
 // Version and framework info
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const FRAMEWORK_NAME: &str = "RSX";

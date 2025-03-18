@@ -1,9 +1,4 @@
-use axum::{
-    response::Html,
-    routing::get,
-    Router as AxumRouter,
-};
-use std::sync::Arc;
+use axum::response::Html;use std::sync::Arc;
 
 pub struct RouteConfig {
     path: String,
@@ -11,20 +6,11 @@ pub struct RouteConfig {
 }
 
 impl RouteConfig {
-    pub fn new<F>(path: &str, handler: F) -> Self 
-    where 
-        F: Fn() -> Html<String> + Send + Sync + 'static,
-    {
-        RouteConfig {
-            path: path.to_string(),
-            handler: Arc::new(handler),
-        }
+    pub fn path(&self) -> &str {
+        &self.path
     }
 
-    pub fn into_route(&self) -> (String, AxumRouter) {
-        let handler = self.handler.clone();
-        let router = AxumRouter::new()
-            .route("/", get(move || async move { (handler)() }));
-        (self.path.clone(), router)
+    pub fn get_handler(&self) -> &Arc<dyn Fn() -> Html<String> + Send + Sync> {
+        &self.handler
     }
 }

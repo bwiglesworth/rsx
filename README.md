@@ -1,56 +1,47 @@
-# RSX - Rust Server Extensions Framework
+# RSX Web Framework
 
-A Next.js inspired web framework built in Rust, focusing on performance and developer experience.
+A modern Rust web framework built with Axum, featuring hot reload capabilities and a flexible styling system.
 
-## Completed Features
-- HTTP Server with Axum integration
-- Route configuration system
-- Component-based architecture
-- HTML template generation
-- Asset compilation pipeline
-- Hot reload development server
+## Features
 
-## Usage
+- Fast and efficient routing system
+- Built-in hot reload functionality
+- Customizable styling system
+- Clean and intuitive API
+
+## Example Usage
 
 ```rust
-use rsx::{init, Server, RouteConfig, AppTemplate};
 use axum::response::Html;
+use rsx::{Router, Server};
 
 #[tokio::main]
 async fn main() {
-    let router = init();
-    let mut server = Server::new(router);
+    let mut router = Router::new();
     
-    let template = AppTemplate::new("RSX App");
-    server.add_route(RouteConfig::new("/", move || {
-        Html(template.generate())
-    }));
-
+    router.route("/", || Html("<h1>Welcome to RSX!</h1>".to_string()));
+    
+    let server = Server::new(router);
     server.start().await;
 }
 ```
 
-## Roadmap
-1. Server-side rendering (SSR)
-2. Static site generation (SSG)
-3. File-based routing
-4. API routes
-5. Middleware support
-6. Component lifecycle hooks
-7. State management
-8. CSS-in-Rust support
+## Testing
 
-## Development
+The framework includes comprehensive tests for:
+- Server functionality
+- Hot reload capabilities
+- Styling system
+- Component rendering
 
-Build the project:
+Run tests with:
 ```bash
-cargo build --release
+cargo test
 ```
 
-Run the development server:
-```bash
-cargo run
-```
+## Current Status
 
-## Contributing
-RSX is under active development. Contributions are welcome!
+- ✅ Core routing system
+- ✅ Hot reload implementation
+- ✅ Style management
+- ✅ Integration tests

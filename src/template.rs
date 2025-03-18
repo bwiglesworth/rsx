@@ -1,20 +1,6 @@
-use crate::Style;
-
-pub struct AppTemplate {
-    pub content: String,
-    pub styles: Vec<Style>
-}
-
 impl AppTemplate {
-    pub fn new(content: &str) -> Self {
-        AppTemplate {
-            content: content.to_string(),
-            styles: Vec::new()
-        }
-    }
-
-    pub fn add_styles(&mut self, style: Style) {
-        self.styles.push(style);
+    pub fn add_styles(&mut self, styles: Style) {
+        self.styles.push(styles);
     }
 
     pub fn generate(&self) -> String {
@@ -25,7 +11,8 @@ impl AppTemplate {
             .join("\n");
 
         format!(
-            r#"<!DOCTYPE html>
+            r#"
+            <!DOCTYPE html>
             <html>
                 <head>
                     <style>{}</style>
@@ -33,7 +20,8 @@ impl AppTemplate {
                 <body>
                     {}
                 </body>
-            </html>"#,
+            </html>
+            "#,
             styles,
             self.content
         )

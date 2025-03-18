@@ -1,16 +1,12 @@
-use rsx::{init, Server, RouteConfig, AppTemplate};
 use axum::response::Html;
+use rsx::{Router, Server};
 
 #[tokio::main]
 async fn main() {
-    let router = init();
-    let mut server = Server::new(router);
+    let mut router = Router::new();
     
-    // Add a simple route
-    let template = AppTemplate::new("RSX App");
-    server.add_route(RouteConfig::new("/", move || {
-        Html(template.generate())
-    }));
-
+    router.route("/", || Html("<h1>Welcome to RSX!</h1>".to_string()));
+    
+    let server = Server::new(router);
     server.start().await;
 }

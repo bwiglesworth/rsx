@@ -1,81 +1,50 @@
 # RSX - Rust Server Components
 
-A modern web framework for building server-side rendered applications in Rust.
+A lightweight framework for building server-side rendered React-like components in Rust.
 
-## Completed Features
+## Features
 
+- Server-side component rendering
 - File-based routing
-- Hot reload during development
-- Component system with nested children support
+- Hot module reloading
+- Lifecycle management
 - Built-in styling system
-- Server-side rendering
+- Async component support
 
-## Component Example
+## Getting Started
+
+Add RSX to your Cargo.toml:
+
+```toml
+[dependencies]
+rsx = "0.1.0"
+```
+
+Create your first component:
 
 ```rust
-use rsx::components::{Component, ComponentBuilder};
+use rsx::components::Component;
 
-// Create a card component
-let card = Card {
-    title: "Welcome".to_string(),
-    content: "This is a RSX card component".to_string(),
-    children: Vec::new(),
-};
+struct HelloWorld;
 
-let card = ComponentBuilder::new(card)
-    .build();
-
-// Render the component
-card.render();
+impl Component for HelloWorld {
+    fn render(&self) -> String {
+        "<h1>Hello, World!</h1>".to_string()
+    }
+}
 ```
 
 ## Testing
 
-The framework includes comprehensive tests for:
-- Server functionality
-- Hot reload capabilities
-- Styling system
-- Component rendering
-- File-based routing
-- Counter components
-- Card components
-- Style templates integration
-
-Run tests with:
+Run the test suite:
 ```bash
 cargo test
 ```
-## Current Status
 
-- ✅ Core routing system
-- ✅ Hot reload implementation
-- ✅ Style management
-- ✅ Integration tests
+## Examples
 
-## Roadmap
+Check out the examples directory for more usage patterns and component implementations.
 
-Upcoming features and improvements:
+## License
 
-- [ ] Enhanced component system
-- [ ] Optional client-side rendering capabilities
-- [ ] State management
-- [ ] Database integrations
-- [ ] WebSocket support
-- [ ] CLI tools for project scaffolding
-- [ ] Advanced middleware system
-- [ ] Performance optimizations
-- [ ] Extended documentation and examples
-- [ ] Hybrid rendering options (Server + Client)
-- [ ] Image optimization and handling
-- [ ] API routes
-- [ ] Built-in CSS/Sass support
-- [ ] Automatic code splitting
-- [ ] Environment variable handling
-- [ ] Static site generation (SSG)
-- [ ] Incremental Static Regeneration (ISR)
-- [ ] Dynamic imports
-- [ ] SEO optimization tools
-- [ ] Internationalization
-- [ ] Analytics integration
-- [ ] Edge functions
-- [ ] Zero-config deployment
+MIT

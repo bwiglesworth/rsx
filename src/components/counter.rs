@@ -11,20 +11,20 @@ pub struct Counter {
     pub children: Vec<Box<dyn Component<State = CounterState>>>,
 }
 
+impl Counter {
+    pub fn new() -> Self {
+        Self {
+            state: CounterState { count: 0, updates: 0 },
+            children: Vec::new(),
+        }
+    }
+}
+
 impl Component for Counter {
     type State = CounterState;
 
     fn render(&self) -> String {
-        format!(
-            r#"<div class="counter">
-                <h2>Counter: {}</h2>
-                <button onclick="increment()">+</button>
-                <button onclick="decrement()">-</button>
-                <div class="counter-info">Updates: {}</div>
-            </div>"#,
-            self.state.count,
-            self.state.updates
-        )
+        format!("<div>Count: {}</div>", self.state.count)
     }
 
     fn get_state(&self) -> &Self::State {
@@ -33,22 +33,5 @@ impl Component for Counter {
 
     fn set_state(&mut self, state: Self::State) {
         self.state = state;
-    }
-
-    fn init(&mut self) {
-        println!("Counter initialized with value: {}", self.state.count);
-    }
-
-    fn before_mount(&mut self) {
-        self.state.updates = 0;
-    }
-
-    fn before_update(&mut self) -> bool {
-        self.state.updates += 1;
-        true
-    }
-
-    fn updated(&mut self) {
-        println!("Counter updated to: {}", self.state.count);
     }
 }

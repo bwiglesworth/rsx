@@ -14,8 +14,7 @@ struct RouteInfo {
     file_path: PathBuf,
     handler_type: HandlerType,
 }
-
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum HandlerType {
     Page,
     Api,
@@ -114,4 +113,10 @@ impl FileRouter {
             .find(|route| route.path == path)
             .and_then(|route| fs::read_to_string(&route.file_path).ok())
     }
-}
+
+    pub fn get_routes_by_type(&self, target_type: &HandlerType) -> Vec<String> {
+        self.routes
+            .iter()
+            .filter(|route| &route.handler_type == target_type)
+            .map(|route| route.path.clone())
+            .collect()    }}

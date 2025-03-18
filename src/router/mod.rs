@@ -17,18 +17,16 @@ impl Router {
 
     pub fn with_pages<P: AsRef<Path>>(pages_dir: P) -> Self {
         let mut router = Self::new();
-        let file_router = FileRouter::new(pages_dir);
+        router.file_router = Some(FileRouter::new(pages_dir));
         
-        // Add routes from file system
-        for route in file_router.get_routes() {
-            let path = route.0.clone();
-            let content = file_router.get_route_content(&path)
-                .unwrap_or_else(|| String::from("Page not found"));
-            
-            router.route(&path, move || Html(content.clone()));
+        if let Some(file_router) = &router.file_router {
+            for (path, content) in file_router.get_routes() {
+                let content_str = content().0;
+                let handler = move || Html(content_str.clone());
+                router.route(&path, handler);
+            }
         }
         
-        router.file_router = Some(file_router);
         router
     }
     pub fn route<H>(&mut self, path: &str, handler: H) -> &mut Self 

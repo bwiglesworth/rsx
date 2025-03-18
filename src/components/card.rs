@@ -1,19 +1,26 @@
 use super::Component;
 
-pub struct Card {
+#[derive(Clone)]
+pub struct CardState {
     pub title: String,
     pub content: String,
-    pub children: Vec<Box<dyn Component>>,
+}
+
+pub struct Card {
+    pub state: CardState,
+    pub children: Vec<Box<dyn Component<State = CardState>>>,
 }
 impl Component for Card {
+    type State = CardState;
+
     fn render(&self) -> String {
         format!(
             r#"<div class="card">
                 <h2>{}</h2>
                 <div class="content">{}</div>
                 {}</div>"#,
-            self.title,
-            self.content,
+            self.state.title,
+            self.state.content,
             self.children.iter()
                 .map(|child| child.render())
                 .collect::<Vec<_>>()
@@ -21,7 +28,13 @@ impl Component for Card {
         )
     }
 
-    fn update(&mut self) -> bool {
-        true
+    fn get_state(&self) -> &Self::State {
+        &self.state
     }
+
+    fn set_state(&mut self, state: Self::State) {
+        self.state = state;
+    }
+
+    fn updated(&mut self) {}
 }

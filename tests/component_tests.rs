@@ -1,9 +1,11 @@
-use rsx::components::{Component, ComponentBuilder, Card};
+use rsx::components::{Component, ComponentBuilder, Card, CardState};
 #[test]
 fn test_card_component() {
     let card = Card {
-        title: "Test Card".to_string(),
-        content: "This is a test card content".to_string(),
+        state: CardState {
+            title: "Test Card".to_string(),
+            content: "This is a test card content".to_string(),
+        },
         children: Vec::new(),
     };
 

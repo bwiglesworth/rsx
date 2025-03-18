@@ -55,6 +55,7 @@ cargo test
 Upcoming features and improvements:
 
 - [ ] Enhanced component system
+- [ ] Optional client-side rendering capabilities
 - [ ] State management
 - [ ] Database integrations
 - [ ] WebSocket support
@@ -62,3 +63,4 @@ Upcoming features and improvements:
 - [ ] Advanced middleware system
 - [ ] Performance optimizations
 - [ ] Extended documentation and examples
+- [ ] Hybrid rendering options (Server + Client)

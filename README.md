@@ -2,6 +2,10 @@
 
 A modern Rust web framework built with Axum, featuring hot reload capabilities and a flexible styling system.
 
+## Development Status
+
+This project is under active development. While core features are functional, the API may change as we enhance and optimize the framework.
+
 ## Features
 
 - Fast and efficient routing system
@@ -45,3 +49,16 @@ cargo test
 - ✅ Hot reload implementation
 - ✅ Style management
 - ✅ Integration tests
+
+## Roadmap
+
+Upcoming features and improvements:
+
+- [ ] Enhanced component system
+- [ ] State management
+- [ ] Database integrations
+- [ ] WebSocket support
+- [ ] CLI tools for project scaffolding
+- [ ] Advanced middleware system
+- [ ] Performance optimizations
+- [ ] Extended documentation and examples

@@ -1,6 +1,5 @@
 mod fs_router;
 pub use fs_router::FileRouter;
-use fs_router::HandlerType;
 use axum::{Router as AxumRouter, routing::get, response::Html};
 use std::path::Path;
 pub struct Router {

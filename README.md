@@ -29,8 +29,6 @@ let card = ComponentBuilder::new(card)
 card.render();
 ```
 
-Ready to add more examples or enhance the documentation further!
-
 ## Testing
 
 The framework includes comprehensive tests for:
@@ -38,12 +36,15 @@ The framework includes comprehensive tests for:
 - Hot reload capabilities
 - Styling system
 - Component rendering
+- File-based routing
+- Counter components
+- Card components
+- Style templates integration
 
 Run tests with:
 ```bash
 cargo test
 ```
-
 ## Current Status
 
 - ✅ Core routing system
@@ -65,7 +66,6 @@ Upcoming features and improvements:
 - [ ] Performance optimizations
 - [ ] Extended documentation and examples
 - [ ] Hybrid rendering options (Server + Client)
-- [ ] File-based routing system
 - [ ] Image optimization and handling
 - [ ] API routes
 - [ ] Built-in CSS/Sass support
@@ -78,4 +78,4 @@ Upcoming features and improvements:
 - [ ] Internationalization
 - [ ] Analytics integration
 - [ ] Edge functions
-- [ ] Zero-config deployment- [ ] Hybrid rendering options (Server + Client)
+- [ ] Zero-config deployment

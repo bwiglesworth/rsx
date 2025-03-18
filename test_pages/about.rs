@@ -1,1 +1,0 @@
-Html("<h1>About Page</h1>".to_string())

@@ -1,5 +1,7 @@
 use std::path::{Path, PathBuf};
+use std::fs;
 use walkdir::WalkDir;
+use axum::response::Html;
 
 pub struct FileRouter {
     root_path: PathBuf,
@@ -20,13 +22,6 @@ pub enum HandlerType {
     Static,
 }
 
-// impl FileRouter {
-//     pub fn get_routes(&self) -> Vec<(String, HandlerType)> {
-//         self.routes
-//             .iter()
-//             .map(|route| (route.path.clone(), route.handler_type.clone()))
-//             .collect()
-//     }
 impl FileRouter {
     pub fn new<P: AsRef<Path>>(root_path: P) -> Self {
         let mut router = Self {
@@ -35,6 +30,28 @@ impl FileRouter {
         };
         router.scan_routes();
         router
+    }
+
+    pub fn get_routes(&self) -> Vec<(String, Box<dyn Fn() -> Html<String> + Send + Sync>)> {
+        self.routes
+            .iter()
+            .map(|route| {
+                let content = fs::read_to_string(&route.file_path)
+                    .unwrap_or_else(|_| "".to_string());
+                let handler: Box<dyn Fn() -> Html<String> + Send + Sync> = 
+                    Box::new(move || Self::eval(&content));
+                (route.path.clone(), handler)
+            })
+            .collect()
+    }
+
+    fn eval(content: &str) -> Html<String> {
+        // Remove the Html wrapper and .to_string() from the content
+        let html_content = content
+            .trim_start_matches("Html(\"")
+            .trim_end_matches("\".to_string())")
+            .to_string();
+        Html(html_content)
     }
 
     fn scan_routes(&mut self) {

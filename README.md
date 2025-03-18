@@ -69,7 +69,23 @@ Check out the examples directory for more usage patterns and component implement
 
 ## Creating a Website with RSX
 
-### 1. Create a Navigation Component
+### Project Structure
+```
+my-rsx-website/
+├── Cargo.toml
+├── src/
+│   ├── main.rs
+│   └── components/
+│       └── navbar.rs
+├── pages/
+│   ├── index.rs
+│   ├── about.rs
+│   └── blog.rs
+└── styles/
+    └── global.rs
+```
+
+### 1. Create a Navigation Component in `src/components/navbar.rs`:
 
 ```rust
 use rsx::components::Component;
@@ -98,7 +114,7 @@ impl Component for NavBar {
 }
 ```
 
-### 2. Set Up Your Website
+### 2. Set Up Your Website in `src/main.rs`:
 
 ```rust
 use rsx::{Router, Server};
@@ -106,11 +122,9 @@ use axum::response::Html;
 
 #[tokio::main]
 async fn main() {
-    // Create your components
     let navbar = NavBar;
     let home_page = HomePage::new();
     
-    // Set up routing
     let mut router = Router::new();
     router.route("/", move || {
         let content = format!(
@@ -124,12 +138,10 @@ async fn main() {
         Html(content)
     });
 
-    // Start the server
     let server = Server::new(router);
     println!("Server running at http://localhost:3000");
     server.start().await;
 }
 ```
 
-Your website will now have a navigation bar at the top of every page. Add more routes and components following the same pattern!
-MIT
+RSX will automatically handle routing based on your pages directory structure,MIT

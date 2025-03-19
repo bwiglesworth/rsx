@@ -4,10 +4,12 @@ use tokio::sync::Mutex;
 mod lifecycle;
 mod counter;
 mod card;
+mod button;
 
 pub use lifecycle::{OnMount, LifecycleState};
 pub use counter::{Counter, CounterState};
 pub use card::{Card, CardState};
+pub use button::{Button, ButtonState};
 
 pub trait Component {
     type State;

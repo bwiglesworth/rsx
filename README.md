@@ -2,6 +2,10 @@
 
 ![Status](https://img.shields.io/badge/Status-Under%20Development-blue)
 ![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
+![Version](https://img.shields.io/badge/Version-0.6.0-orange)
+![Production Release](https://img.shields.io/badge/Production%20Release-30%20weeks-yellow)
+
+RSX is a lightweight framework for building server-side rendered React-like components in Rust, powered by Axum. The framework is actively progressing toward a production release with a focused 30-week development roadmap.
 
 
 RSX is a lightweight framework for building server-side rendered React-like components in Rust, powered by Axum.

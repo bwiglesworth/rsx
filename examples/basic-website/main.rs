@@ -1,32 +1,13 @@
 use rsx::{Router, Server};
-use axum::response::Html;
+use pages::{home_page, about_page};
 
 #[tokio::main]
 async fn main() {
-    let mut router = Router::new();
+    let router = Router::new();
     
-    router.route("/", || Html(r#"
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>RSX Basic Website</title>
-                <style>
-                    body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
-                    nav { margin: 20px 0; }
-                    nav a { margin-right: 10px; }
-                </style>
-            </head>
-            <body>
-                <h1>Welcome to RSX Basic Website</h1>
-                <nav>
-                    <a href="/">Home</a>
-                    <a href="/about">About</a>
-                </nav>
-                <p>This is your new RSX website!</p>
-            </body>
-        </html>
-    "#.to_string()));
-
+    router.route("/", || home_page());
+    router.route("/about", || about_page());
+    
     let server = Server::new(router);
     println!("Server running at http://localhost:3000");
     server.start().await;

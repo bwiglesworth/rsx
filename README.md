@@ -1,6 +1,8 @@
 # RSX - Server-Side React-like Components in Rust
 
 ![Status](https://img.shields.io/badge/Status-Under%20Development-blue)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
+
 
 RSX is a lightweight framework for building server-side rendered React-like components in Rust, powered by Axum.
 ## Features

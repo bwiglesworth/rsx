@@ -20,7 +20,7 @@ RSX is a lightweight framework for building server-side rendered React-like comp
 Add RSX to your project:
 ```toml
 [dependencies]
-rsx = "1.0.0"
+rsx = "0.6.0"
 ```
 
 Create your first component:

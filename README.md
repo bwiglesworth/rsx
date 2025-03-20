@@ -1,147 +1,108 @@
-# RSX - Rust Server Components
+# RSX - Server-Side React-like Components in Rust
 
-A lightweight framework for building server-side rendered React-like components in Rust.
+RSX is a lightweight framework for building server-side rendered React-like components in Rust, powered by Axum.
 
 ## Features
 
-- Server-side component rendering
-- File-based routing
-- Hot module reloading
-- Lifecycle management
-- Built-in styling system
-- Async component support
+- **File-System Based Routing**: Automatically generate routes from your directory structure
+- **Component System**: Build reusable UI components with state management
+- **Dynamic Routes**: Support for dynamic parameters in URLs
+- **Fast & Lightweight**: Built on top of Axum for high performance
 
-## Getting Started
+## Quick Start
 
-Add RSX to your Cargo.toml:
-
+Add RSX to your project:
 ```toml
 [dependencies]
-rsx = "0.1.0"
+rsx = "1.0.0"
 ```
 
 Create your first component:
-
 ```rust
-use rsx::components::Component;
+use rsx::Component;
 
-#[derive(Default)]
-struct CounterState {
-    count: i32
+#[derive(Default, Clone)]
+struct BlogState {
+     posts: Vec<Post>
 }
 
-struct Counter {
-    state: CounterState
+struct Blog {
+     state: BlogState,
 }
 
-impl Component for Counter {
-    type State = CounterState;
-    
-    fn render(&self) -> String {
-        format!("<div>Count: {}</div>", self.state.count)
-    }
+impl Component for Blog {
+     type State = BlogState;
+
+     fn render(&self) -> String {
+         let mut style = Style::new();
+         style.add_rule(".blog")
+             .property("max-width", "800px")
+             .property("margin", "0 auto");
+
+         let posts = self.state.posts.iter()
+             .map(|post| format!(
+                 "<article><h2>{}</h2><p>{}</p></article>",
+                 post.title, post.content
+             ))
+             .collect::<Vec<_>>()
+             .join("\n");
+
+         format!("<div class='blog'>{}{}</div>", style, posts)
+     }
 }
 ```
 
-## File-Based Routing
+## File-System Based Routing
 
-RSX uses a file-based routing system similar to Next.js:
+RSX uses your directory structure to create routes:
 
 ```
 pages/
-  index.rs      -> "/"
-  about.rs      -> "/about"
-  blog/
-    index.rs    -> "/blog"
-    [slug].rs   -> "/blog/:slug"
+   index.rs      -> "/"
+   about.rs      -> "/about"
+   blog/
+     index.rs    -> "/blog"
+     [slug].rs   -> "/blog/:slug"
 ```
 
-## Testing
+## Roadmap
 
-Run the test suite:
-```bash
-cargo test
-```
+1. Core Features
+    - Builder implementation completion
+    - Asset processing pipeline
+    - HTML sanitization/escaping
+    - Enhanced error handling
 
-## Examples
+2. Documentation
+    - Complete API documentation
+    - Extended examples
+    - Component best practices
 
-Check out the examples directory for more usage patterns and component implementations.
+3. Testing
+    - Expanded test coverage
+    - Integration tests
+    - Benchmarking suite
 
-## Creating a Website with RSX
+4. Performance
+    - Route matching optimization
+    - Component caching
+    - Static asset optimization
 
-### Project Structure
-```
-my-rsx-website/
-├── Cargo.toml
-├── src/
-│   ├── main.rs
-│   └── components/
-│       └── navbar.rs
-├── pages/
-│   ├── index.rs
-│   ├── about.rs
-│   └── blog.rs
-└── styles/
-    └── global.rs
-```
+5. Developer Experience
+    - Hot reloading
+    - Project scaffolding
+    - Debug tooling
 
-### 1. Create a Navigation Component in `src/components/navbar.rs`:
+6. Advanced Features
+    - Server-side data fetching
+    - Static site generation
+    - Component hydration
+    - TypeScript/JavaScript interop
 
-```rust
-use rsx::components::Component;
-use rsx::styles::Style;
+## Contributing
 
-struct NavBar;
+RSX is open to contributions. Feel free to submit issues and pull requests.
 
-impl Component for NavBar {
-    fn render(&self) -> String {
-        let mut style = Style::new();
-        style.add_rule("nav")
-            .property("background", "#333")
-            .property("padding", "1rem")
-            .property("color", "white");
+## License
 
-        format!(
-            "<style>{}</style>
-            <nav>
-                <a href='/'>Home</a>
-                <a href='/about'>About</a>
-                <a href='/blog'>Blog</a>
-            </nav>",
-            style
-        )
-    }
-}
-```
-
-### 2. Set Up Your Website in `src/main.rs`:
-
-```rust
-use rsx::{Router, Server};
-use axum::response::Html;
-
-#[tokio::main]
-async fn main() {
-    let navbar = NavBar;
-    let home_page = HomePage::new();
-    
-    let mut router = Router::new();
-    router.route("/", move || {
-        let content = format!(
-            "<div class='app'>
-                {}
-                {}
-            </div>",
-            navbar.render(),
-            home_page.render()
-        );
-        Html(content)
-    });
-
-    let server = Server::new(router);
-    println!("Server running at http://localhost:3000");
-    server.start().await;
-}
-```
-
-RSX will automatically handle routing based on your pages directory structure,MIT
+MIT Licensed. See LICENSE for details.

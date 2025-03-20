@@ -68,40 +68,20 @@ pages/
      [slug].rs   -> "/blog/:slug"
 ```
 
-## Roadmap
+## Current Implementation Status
 
-1. Core Features
-    - Builder implementation completion
-    - Asset processing pipeline
-    - HTML sanitization/escaping
-    - Enhanced error handling
+### Completed Features
+- File system router implementation with static route handling
+- Basic component system with state management
+- Blog example implementation
+- Integration with Axum web framework
+- Dynamic route parameter support ([slug] style routes)
 
-2. Documentation
-    - Complete API documentation
-    - Extended examples
-    - Component best practices
-
-3. Testing
-    - Expanded test coverage
-    - Integration tests
-    - Benchmarking suite
-
-4. Performance
-    - Route matching optimization
-    - Component caching
-    - Static asset optimization
-
-5. Developer Experience
-    - Hot reloading
-    - Project scaffolding
-    - Debug tooling
-
-6. Advanced Features
-    - Server-side data fetching
-    - Static site generation
-    - Component hydration
-    - TypeScript/JavaScript interop
-
+### Testing Coverage
+- File system router tests validating route generation
+- Route handler execution verification
+- Path matching validation
+- Basic component rendering tests through the blog example
 ## Contributing
 
 RSX is open to contributions. Feel free to submit issues and pull requests.
